@@ -1,4 +1,4 @@
- <img width=100% src="https://github.com/PedroTeixeira027/CRUD-POO1/blob/main/Arquivos%20do%20Projeto/LOGOMARCA_UEMG_Horizontal.png"/>
+ <img width=80% src="https://github.com/PedroTeixeira027/CRUD-POO1/blob/main/Arquivos%20do%20Projeto/LOGOMARCA_UEMG_Horizontal.png"/>
 
 ### Trabalho de POO1 - Sistemas de Informação
 
