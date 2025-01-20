@@ -12,14 +12,11 @@ O Trabalho consiste em complementar um CRUD, criando um cadastro para o forneced
 @Kawan Silva (Aluno) <br>
 <a href="https://www.linkedin.com/in/kawansilva29" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
 
-@xxx (Aluno) <br>
-<a href="https://www.linkedin.com/in/alex-negreiros-61893026/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
+@Guilherme Reis (Aluno) <br>
+<a href="https://www.linkedin.com/in/guilherme-reis-pereira/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
 
-@xxx (Aluno) <br>
-<a href="https://www.linkedin.com/in/rafaelmaferreira/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
+@Bruno Rezende (Aluno) <br>
+<a href="https://www.linkedin.com/in/bruno-rezende-758618234/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
 
-@xxx (Aluno) <br>
-<a href="https://www.linkedin.com/in/germana-queiroz-it/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
-
-@xxx (Aluno) <br>
-<a href="https://www.linkedin.com/in/jardeljga/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
+@Pedro Teixeira (Aluno) <br>
+<a href="https://www.linkedin.com/in/pedro-teixeira-3534a3268/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
