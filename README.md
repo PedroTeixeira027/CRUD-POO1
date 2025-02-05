@@ -26,3 +26,9 @@ Pedro Teixeira (Aluno) <br>
 ## Objetivos
 
 ### Documentação Final
+
+
+
+
+## License
+This project is under [MIT License](./LICENSE).
