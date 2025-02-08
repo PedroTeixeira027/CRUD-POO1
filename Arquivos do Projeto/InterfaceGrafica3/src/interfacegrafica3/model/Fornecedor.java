@@ -8,6 +8,9 @@ public class Fornecedor extends PessoaJuridica {
 
     private String categoria;
     private Uf uf;
+    
+    public Fornecedor(){
+    }
 
     public Fornecedor(int id, String cnpj, String inscricaoEstadual, String nomeFantasia, 
                       String nome, String email, String endereco, String telefone, 
@@ -16,8 +19,7 @@ public class Fornecedor extends PessoaJuridica {
         this.categoria = categoria;
         this.uf = uf;
     }
-    public Fornecedor(){
-    }
+    
     public String getCategoria() {
         return categoria;
     }
@@ -32,5 +34,5 @@ public class Fornecedor extends PessoaJuridica {
 
     public void setUf(Uf uf) {
         this.uf = uf;
-    }
+    }   
 }

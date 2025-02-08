@@ -1,0 +1,29 @@
+package interfacegrafica3.repository;
+
+import java.sql.Connection;
+
+/**
+ *
+ * @author Professor
+ */
+public interface Crud<T> {
+    // Esse método é para inserir uma nova coisa no banco de dados.
+    // Ele recebe a conexão com o banco e a coisa que queremos inserir.
+    // Se der certo, retorna `true`, senão `false`.
+    public boolean inserir(Connection connection, T entity);
+
+    // Esse método é para atualizar uma coisa no banco de dados.
+    // Ele recebe a conexão com o banco e a coisa que queremos atualizar.
+    // Se der certo, retorna `true`, senão `false`.
+    public boolean atualizar(Connection connection, T entity);
+
+    // Esse método é para deletar uma coisa no banco de dados.
+    // Ele recebe a conexão com o banco e a coisa que queremos deletar.
+    // Se der certo, retorna `true`, senão `false`.
+    public boolean deletar(Connection connection, T entity);
+
+    // Esse método é para selecionar uma coisa no banco de dados.
+    // Ele recebe a conexão com o banco, um operador (como "igual", "maior que", etc.)
+    // e um ID. Ele retorna a coisa que foi selecionada, ou `null` se não encontrar nada.
+    public T selecionar(Connection connection, String operador, int id);
+}

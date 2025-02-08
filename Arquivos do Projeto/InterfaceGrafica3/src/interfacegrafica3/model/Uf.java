@@ -15,6 +15,10 @@ public class Uf {
 
     public Uf(){}
     
+    public Uf(int id) {
+        this.id = id;
+    }
+    
     public Uf(String nome, String sigla, int id) {
         this.nome = nome;
         this.sigla = sigla;

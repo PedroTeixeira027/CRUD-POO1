@@ -1,0 +1,76 @@
+package interfacegrafica3.repository;
+
+
+public class Conexao {
+    // Armazena o endereço do servidor do banco de dados.
+    private String endereco;
+    // Armazena o nome de usuário para acessar o banco de dados.
+    private String user;
+    // Armazena a senha para acessar o banco de dados.
+    private String password;
+    // Armazena a porta de comunicação com o servidor do banco de dados.
+    private int    porta;
+    // Armazena o nome do banco de dados específico a ser utilizado.
+    private String nomeBanco;
+
+    // Construtor da classe Conexao.
+    // Inicializa os atributos do objeto Conexao com os valores fornecidos.
+    public Conexao(String endereco, String user, String password, int porta, String nomeBanco) {
+        this.endereco = endereco;
+        this.user = user;
+        this.password = password;
+        this.porta = porta;
+        this.nomeBanco = nomeBanco;
+    }
+
+    // Retorna o valor do atributo endereco.
+    public String getEndereco() {
+        return endereco;
+    }
+
+    // Define o valor do atributo endereco.
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    // Retorna o valor do atributo user.
+    public String getUser() {
+        return user;
+    }
+
+    // Define o valor do atributo user.
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    // Retorna o valor do atributo password.
+    public String getPassword() {
+        return password;
+    }
+
+    // Define o valor do atributo password.
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    // Retorna o valor do atributo porta.
+    public int getPorta() {
+        return porta;
+    }
+
+    // Define o valor do atributo porta.
+    public void setPorta(int porta) {
+        this.porta = porta;
+    }
+
+    // Retorna o valor do atributo nomeBanco.
+    public String getNomeBanco() {
+        return nomeBanco;
+    }
+
+    // Define o valor do atributo nomeBanco.
+    public void setNomeBanco(String nomeBanco) {
+        this.nomeBanco = nomeBanco;
+    }
+    
+}

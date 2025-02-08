@@ -1,0 +1,190 @@
+package interfacegrafica3.repository;
+
+import interfacegrafica3.model.Pessoa;
+//import static interfacegrafica3.repository.ConexaoMySQL.connection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author Professor
+ */
+public class PessoaRepository implements Crud<Pessoa> {
+    
+    //private Pessoa pessoa;
+    
+    public PessoaRepository(){
+        //this.pessoa = pessoa;
+    }
+
+    /*
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
+    }*/
+    
+    // Crud - Selecionar
+    // Esse método está incompleto. Ele não retorna a pessoa selecionada.
+    // Você precisa adicionar código para consultar o banco de dados e retornar a pessoa.
+    public Pessoa selecionar(int id){
+        return null;
+    }    
+    
+    // Crud - inserir
+    @Override
+    public boolean inserir(Connection connection, Pessoa pessoa) {
+        PreparedStatement stmt = null;
+        try{
+            // Cria a instrução SQL para inserir uma nova pessoa no banco de dados.
+            String comando = "INSERT INTO cadastro_pessoa(nome, endereco, email, telefone) " +
+                             "VALUES(?, ?, ?, ?)";
+            // Prepara a instrução SQL para execução.
+            stmt = connection.prepareStatement(comando);
+            // Define os valores para cada campo da pessoa.
+            stmt.setString(1, pessoa.getNome());
+            stmt.setString(2, pessoa.getEndereco());
+            stmt.setString(3, pessoa.getEmail());
+            stmt.setString(4, pessoa.getTelefone());
+            // Executa a inserção no banco de dados.
+            stmt.executeUpdate();
+            // Fecha o `PreparedStatement` para liberar recursos.
+            stmt.close();
+            // Se a inserção foi bem-sucedida, retorna `true`.
+            return true;
+        }catch(Exception ex){
+            // Se ocorreu algum erro durante a inserção, mostra uma mensagem de erro para o usuário.
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Erro ao inserir pessoa: " + ex.getMessage(),
+                    "Erro ao inserir",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            // Retorna `false` para indicar que houve um erro.
+            return false;
+        }
+        //return false;
+    }
+
+    // Crud - atualizar
+    @Override
+    public boolean atualizar(Connection connection, Pessoa pessoa) {
+        PreparedStatement stmt = null;
+        try{
+            // Cria a instrução SQL para atualizar uma pessoa no banco de dados.
+            String comando = "UPDATE cadastro_pessoa SET " +
+                             "nome = ?, endereco = ?, email = ?, telefone = ? " +
+                             "WHERE id = ?";
+            // Prepara a instrução SQL para execução.
+            stmt = connection.prepareStatement(comando);
+            // Define os valores para cada campo da pessoa.
+            stmt.setString(1, pessoa.getNome());
+            stmt.setString(2, pessoa.getEndereco());
+            stmt.setString(3, pessoa.getEmail());
+            stmt.setString(4, pessoa.getTelefone());
+            // Define o ID da pessoa que queremos atualizar.
+            stmt.setInt(5, pessoa.getId());
+            // Executa a atualização no banco de dados.
+            stmt.executeUpdate();
+            // Fecha o `PreparedStatement` para liberar recursos.
+            stmt.close();
+            // Se a atualização foi bem-sucedida, retorna `true`.
+            return true;
+        }catch(Exception ex){
+            // Se ocorreu algum erro durante a atualização, mostra uma mensagem de erro para o usuário.
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Erro ao atualizar pessoa: " + ex.getMessage(),
+                    "Erro ao atualizar",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            // Retorna `false` para indicar que houve um erro.
+            return false;
+        }        
+    }
+
+    // Crud - deletar
+    @Override
+    public boolean deletar(Connection connection, Pessoa pessoa) {
+        PreparedStatement stmt = null;
+        try{
+            // Cria a instrução SQL para deletar uma pessoa do banco de dados.
+            String comando = "DELETE FROM cadastro_pessoa " +
+                             "WHERE id = ?";
+            // Prepara a instrução SQL para execução.
+            stmt = connection.prepareStatement(comando);
+            // Define o ID da pessoa que queremos deletar.
+            stmt.setInt(1, pessoa.getId());
+            // Executa a deleção no banco de dados.
+            stmt.executeUpdate();
+            // Fecha o `PreparedStatement` para liberar recursos.
+            stmt.close();
+            // Se a deleção foi bem-sucedida, retorna `true`.
+            return true;
+        }catch(Exception ex){
+            // Se ocorreu algum erro durante a deleção, mostra uma mensagem de erro para o usuário.
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Erro ao deletar pessoa: " + ex.getMessage(),
+                    "Erro ao deletar",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            // Retorna `false` para indicar que houve um erro.
+            return false;
+        }
+    }
+
+    // Crud - selecionar
+    @Override
+    public Pessoa selecionar(Connection connection, String operador, int id) {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            // Cria a instrução SQL para selecionar uma pessoa.
+            String comando = "SELECT * FROM cadastro_pessoa WHERE id " + operador + " ?";
+            // Prepara a instrução SQL para execução.
+            stmt = connection.prepareStatement(comando);
+            // Define o ID da pessoa que queremos selecionar.
+            stmt.setInt(1, id);
+            // Executa a seleção no banco de dados.
+            rs = stmt.executeQuery();
+            // Se encontrou uma pessoa, cria um novo objeto `Pessoa` e preenche com os dados do banco de dados.
+            if (rs.next()) {
+                Pessoa pessoa = new Pessoa();
+                pessoa.setId(rs.getInt("id"));
+                pessoa.setNome(rs.getString("nome"));
+                pessoa.setEndereco(rs.getString("endereco"));
+                pessoa.setEmail(rs.getString("email"));
+                pessoa.setTelefone(rs.getString("telefone"));
+                // Retorna o objeto `Pessoa` com os dados selecionados.
+                return pessoa;
+            }
+        } catch (Exception ex) {
+            // Se ocorreu algum erro durante a seleção, mostra uma mensagem de erro para o usuário.
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Erro ao selecionar pessoa: " + ex.getMessage(),
+                    "Erro ao selecionar",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } finally {
+            // Fecha o `PreparedStatement` e o `ResultSet` para liberar recursos.
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception ex) {
+                // Aqui, você pode logar a falha no fechamento, se necessário.
+            }
+        }
+        // Se não encontrou nenhuma pessoa, retorna `null`.
+        return null;
+    }
+}
