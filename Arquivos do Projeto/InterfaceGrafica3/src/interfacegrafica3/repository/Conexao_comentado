@@ -1,0 +1,100 @@
+package interfacegrafica3.repository;
+
+import interfacegrafica3.model.Pessoa;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author Professor
+ */
+public class ConexaoMySQL {
+    // Nossa conexão com o banco de dados! 
+    // Ela guarda as informações de como se conectar ao banco.
+    private Conexao conexao = null;
+
+    // A conexão real com o banco de dados.
+    // É `static` porque só precisamos de uma conexão para todos.
+    public static Connection connection = null;
+
+    // Construtor da classe.
+    // Recebe a conexão que vamos usar para configurar tudo.
+    public ConexaoMySQL(Conexao conexao){
+        this.conexao = conexao;
+    }
+
+    // Tenta conectar ao banco de dados.
+    // Se der certo, retorna `true`, senão `false`.
+    public boolean conectar(){
+        // Verifica se temos a conexão configurada.
+        if(conexao != null){
+            try{
+                // Monta a URL para se conectar ao banco.
+                // É como um endereço para o banco!
+                String url = "jdbc:mysql://" + conexao.getEndereco() +
+                             ":" + conexao.getPorta() +
+                             "/" + conexao.getNomeBanco();
+
+                // Carrega o driver do MySQL.
+                // É como um tradutor para o banco entender o que queremos.
+                Class.forName("com.mysql.cj.jdbc.Driver");
+
+                // Faz a conexão com o banco!
+                // Usa a URL, o usuário e a senha.
+                connection = DriverManager.getConnection(
+                        url,
+                        conexao.getUser(),
+                        conexao.getPassword()
+                );
+                // Conectado com sucesso!
+                return true;                
+            }catch(Exception ex){
+                // Ops, deu erro! 
+                // Mostra uma mensagem para o usuário.
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Erro ao conectar no banco de dados: " + ex.getMessage(),
+                        "Erro ao conectar",
+                        JOptionPane.ERROR_MESSAGE
+                ); 
+                // Retorna `false` porque não conseguimos conectar.
+                return false;
+            } //catch
+        }else{
+            // Não temos a conexão configurada, então não podemos conectar.
+            return false;
+        }
+    }
+
+    // Insere uma nova pessoa no banco de dados.
+    // Recebe a pessoa que queremos inserir.
+    public boolean insert(Pessoa pessoa){
+        PreparedStatement stmt = null;
+        try{
+            // Cria a instrução SQL para inserir a pessoa.
+            // É como um comando para o banco fazer o que queremos.
+            String comando = "INSERT INTO cadastro_pessoa(nome, endereco, email, telefone) " +
+                             "VALUES(?, ?, ?, ?)";
+            // Cria um objeto para executar a instrução SQL.
+            stmt = connection.prepareStatement(comando);
+            // Define os valores para cada campo da pessoa.
+            stmt.setString(1, pessoa.getNome());
+            stmt.setString(2, pessoa.getEndereco());
+            stmt.setString(3, pessoa.getEmail());
+            stmt.setString(4, pessoa.getTelefone());
+            // Executa a instrução SQL e insere a pessoa no banco.
+            stmt.executeUpdate();
+            // Fecha o objeto que executou a instrução.
+            stmt.close();
+        }catch(Exception ex){
+            // Ops, deu erro!
+            // Imprime a mensagem de erro no console.
+            System.out.println(ex.getMessage());
+        }
+        // Retorna `false` porque a função não está configurada para retornar sucesso.
+        return false;
+    }
+    
+}
