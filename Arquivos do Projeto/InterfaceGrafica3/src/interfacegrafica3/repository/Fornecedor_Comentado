@@ -1,0 +1,213 @@
+package interfacegrafica3.repository;
+
+import interfacegrafica3.model.Fornecedor;
+import interfacegrafica3.model.Pessoa;
+import interfacegrafica3.model.Uf;
+//import static interfacegrafica3.repository.ConexaoMySQL.connection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author Professor
+ */
+public class FornecedorRepository implements Crud<Fornecedor> {
+    
+    // Crud - inserir
+    @Override
+    public boolean inserir(Connection connection, Fornecedor fornecedor) {
+        PreparedStatement stmt = null;
+        try {
+            // Cria a instrução SQL para inserir um novo fornecedor.
+            String comando = "INSERT INTO fornecedor(nome, endereco, email, telefone, uf_id, cnpj, inscricao_estadual, nome_fantasia, categoria) " +
+                             "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            // Prepara a instrução SQL para execução.
+            stmt = connection.prepareStatement(comando);
+
+            // Define os valores para cada campo do fornecedor.
+            stmt.setString(1, fornecedor.getNome());
+            stmt.setString(2, fornecedor.getEndereco());
+            stmt.setString(3, fornecedor.getEmail());
+            stmt.setString(4, fornecedor.getTelefone());
+            // Verifica se o fornecedor possui UF antes de definir
+            stmt.setInt(5, fornecedor.getUf() != null ? fornecedor.getUf().getId() : 0);
+            stmt.setString(6, fornecedor.getCnpj());
+            stmt.setString(7, fornecedor.getInscricaoEstadual());
+            stmt.setString(8, fornecedor.getNomeFantasia());
+            stmt.setString(9, fornecedor.getCategoria());
+
+            // Executa a inserção no banco de dados.
+            stmt.executeUpdate(); 
+
+            // Se a inserção foi bem-sucedida, retorna `true`.
+            return true;
+
+        } catch (Exception ex) {
+            // Se ocorreu algum erro durante a inserção, mostra uma mensagem de erro para o usuário.
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Erro ao inserir fornecedor: " + ex.getMessage(),
+                    "Erro ao inserir",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            // Retorna `false` para indicar que houve um erro.
+            return false;  
+        } finally {
+            // Fecha o `PreparedStatement` para liberar recursos.
+            try {
+                if (stmt != null) {
+                    stmt.close();  
+                }
+            } catch (Exception ex) {
+                // Aqui, você pode logar a falha no fechamento, se necessário.
+            }
+        }
+    }
+
+    // Crud - atualizar
+    @Override
+    public boolean atualizar(Connection connection, Fornecedor fornecedor) {
+        PreparedStatement stmt = null;
+        try{
+            // Cria a instrução SQL para atualizar um fornecedor.
+            String comando = "UPDATE fornecedor SET " +
+                             "nome = ?, endereco = ?, email = ?, telefone = ?, uf_id = ?, cnpj = ?, inscricao_estadual = ?, nome_fantasia = ?, categoria = ? " +
+                             "WHERE id = ?";
+            // Prepara a instrução SQL para execução.
+            stmt = connection.prepareStatement(comando);
+            // Define os valores para cada campo do fornecedor.
+            stmt.setString(1, fornecedor.getNome());
+            stmt.setString(2, fornecedor.getEndereco());
+            stmt.setString(3, fornecedor.getEmail());
+            stmt.setString(4, fornecedor.getTelefone());
+            // Verifica se o fornecedor possui UF antes de definir
+            stmt.setInt(5, fornecedor.getUf() != null ? fornecedor.getUf().getId() : 0);
+            stmt.setString(6, fornecedor.getCnpj());
+            stmt.setString(7, fornecedor.getInscricaoEstadual());
+            stmt.setString(8, fornecedor.getNomeFantasia());
+            stmt.setString(9, fornecedor.getCategoria());
+            // Define o ID do fornecedor que queremos atualizar.
+            stmt.setInt(10, fornecedor.getId());
+            // Executa a atualização no banco de dados.
+            stmt.executeUpdate();
+            // Se a atualização foi bem-sucedida, retorna `true`.
+            return true;
+        } catch (Exception ex) {
+            // Se ocorreu algum erro durante a atualização, mostra uma mensagem de erro para o usuário.
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Erro ao atualizar fornecedor: " + ex.getMessage(),
+                    "Erro ao atualizar",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            // Retorna `false` para indicar que houve um erro.
+            return false;
+        } finally {
+            // Fecha o `PreparedStatement` para liberar recursos.
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (Exception ex) {
+                // Aqui, você pode logar a falha no fechamento, se necessário.
+            }
+        }
+    }
+
+    // Crud - deletar
+    @Override
+    public boolean deletar(Connection connection, Fornecedor fornecedor) {
+        PreparedStatement stmt = null;
+        try {
+            // Cria a instrução SQL para deletar um fornecedor.
+            String comando = "DELETE FROM fornecedor WHERE id = ?";
+            // Prepara a instrução SQL para execução.
+            stmt = connection.prepareStatement(comando);
+            // Define o ID do fornecedor que queremos deletar.
+            stmt.setInt(1, fornecedor.getId());
+            // Executa a deleção no banco de dados.
+            stmt.executeUpdate();
+            // Se a deleção foi bem-sucedida, retorna `true`.
+            return true;
+        } catch (Exception ex) {
+            // Se ocorreu algum erro durante a deleção, mostra uma mensagem de erro para o usuário.
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Erro ao deletar fornecedor: " + ex.getMessage(),
+                    "Erro ao deletar",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            // Retorna `false` para indicar que houve um erro.
+            return false;
+        } finally {
+            // Fecha o `PreparedStatement` para liberar recursos.
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (Exception ex) {
+                // Aqui, você pode logar a falha no fechamento, se necessário.
+            }
+        }
+    }
+
+    // Crud - selecionar
+    @Override
+    public Fornecedor selecionar(Connection connection, String operador, int id) {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            // Cria a instrução SQL para selecionar um fornecedor.
+            String comando = "SELECT * FROM fornecedor WHERE id " + operador + " ?";
+            // Prepara a instrução SQL para execução.
+            stmt = connection.prepareStatement(comando);
+            // Define o ID do fornecedor que queremos selecionar.
+            stmt.setInt(1, id);
+            // Executa a seleção no banco de dados.
+            rs = stmt.executeQuery();
+            // Se encontrou um fornecedor, cria um novo objeto `Fornecedor` e preenche com os dados do banco de dados.
+            if (rs.next()) {
+                Fornecedor fornecedor = new Fornecedor();
+                fornecedor.setId(rs.getInt("id"));
+                fornecedor.setNome(rs.getString("nome"));
+                fornecedor.setEndereco(rs.getString("endereco"));
+                fornecedor.setEmail(rs.getString("email"));
+                fornecedor.setTelefone(rs.getString("telefone"));
+                fornecedor.setCnpj(rs.getString("cnpj"));
+                fornecedor.setInscricaoEstadual(rs.getString("inscricao_estadual"));
+                fornecedor.setNomeFantasia(rs.getString("nome_fantasia"));
+                fornecedor.setCategoria(rs.getString("categoria"));
+                // Busca a UF do fornecedor no banco de dados.
+                Uf uf = new UfRepository().selecionar(connection, "=", rs.getInt("uf_id"));
+                fornecedor.setUf(uf);
+                // Retorna o objeto `Fornecedor` com os dados selecionados.
+                return fornecedor;
+            }
+        } catch (Exception ex) {
+            // Se ocorreu algum erro durante a seleção, mostra uma mensagem de erro para o usuário.
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Erro ao selecionar fornecedor: " + ex.getMessage(),
+                    "Erro ao selecionar",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        } finally {
+            // Fecha o `PreparedStatement` e o `ResultSet` para liberar recursos.
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception ex) {
+                // Aqui, você pode logar a falha no fechamento, se necessário.
+            }
+        }
+        // Se não encontrou nenhum fornecedor, retorna `null`.
+        return null;
+    }
+}
