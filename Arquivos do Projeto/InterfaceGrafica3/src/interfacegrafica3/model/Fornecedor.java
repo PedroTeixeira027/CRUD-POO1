@@ -16,7 +16,8 @@ public class Fornecedor extends PessoaJuridica {
         this.categoria = categoria;
         this.uf = uf;
     }
-
+    public Fornecedor(){
+    };
     public String getCategoria() {
         return categoria;
     }
