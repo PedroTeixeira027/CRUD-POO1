@@ -21,7 +21,9 @@ public class PessoaJuridica extends Pessoa {
         this.inscricaoEstadual = inscricaoEstadual;
         this.nomeFantasia = nomeFantasia;
     }
-
+public PessoaJuridica(){
+    
+}
     public String getCnpj() {
         return cnpj;
     }
