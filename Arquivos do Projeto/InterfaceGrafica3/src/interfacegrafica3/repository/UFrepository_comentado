@@ -1,0 +1,150 @@
+package interfacegrafica3.repository;
+
+import interfacegrafica3.model.Uf;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+
+/**
+ *
+ * @author Professor
+ */
+public class UfRepository implements Crud<Uf> {
+
+    @Override
+    public boolean inserir(Connection connection, Uf uf) {
+        PreparedStatement stmt = null;
+        try{
+            // Cria a instrução SQL para inserir uma nova UF no banco de dados.
+            String comando = "INSERT INTO uf(nome, sigla) " +
+                             "VALUES(?, ?)";
+            // Prepara a instrução SQL para execução.
+            stmt = connection.prepareStatement(comando);
+            // Define os valores para cada campo da UF.
+            stmt.setString(1, uf.getNome());
+            stmt.setString(2, uf.getSigla());
+            // Executa a inserção no banco de dados.
+            stmt.executeUpdate();
+            // Fecha o `PreparedStatement` para liberar recursos.
+            stmt.close();
+            // Se a inserção foi bem-sucedida, retorna `true`.
+            return true;
+        }catch(Exception ex){
+            // Se ocorreu algum erro durante a inserção, mostra uma mensagem de erro para o usuário.
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Erro ao inserir uf: " + ex.getMessage(),
+                    "Erro ao inserir",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            // Retorna `false` para indicar que houve um erro.
+            return false;
+        }
+    }
+
+    @Override
+    public boolean atualizar(Connection connection, Uf uf) {
+        PreparedStatement stmt = null;
+        try{
+            // Cria a instrução SQL para atualizar uma UF no banco de dados.
+            String comando = "UPDATE uf SET " +
+                             "nome = ?, sigla = ? " +
+                             "WHERE id = ?";
+            // Prepara a instrução SQL para execução.
+            stmt = connection.prepareStatement(comando);
+            // Define os valores para cada campo da UF.
+            stmt.setString(1, uf.getNome());
+            stmt.setString(2, uf.getSigla());
+            // Define o ID da UF que queremos atualizar.
+            stmt.setInt(3, uf.getId());
+            // Executa a atualização no banco de dados.
+            stmt.executeUpdate();
+            // Fecha o `PreparedStatement` para liberar recursos.
+            stmt.close();
+            // Se a atualização foi bem-sucedida, retorna `true`.
+            return true;
+        }catch(Exception ex){
+            // Se ocorreu algum erro durante a atualização, mostra uma mensagem de erro para o usuário.
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Erro ao atualizar uf: " + ex.getMessage(),
+                    "Erro ao atualizar",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            // Retorna `false` para indicar que houve um erro.
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deletar(Connection connection, Uf uf) {
+        PreparedStatement stmt = null;
+        try{
+            // Cria a instrução SQL para deletar uma UF do banco de dados.
+            String comando = "DELETE FROM uf " +
+                             "WHERE id = ?";
+            // Prepara a instrução SQL para execução.
+            stmt = connection.prepareStatement(comando);
+            // Define o ID da UF que queremos deletar.
+            stmt.setInt(1, uf.getId());
+            // Executa a deleção no banco de dados.
+            stmt.executeUpdate();
+            // Fecha o `PreparedStatement` para liberar recursos.
+            stmt.close();
+            // Se a deleção foi bem-sucedida, retorna `true`.
+            return true;
+        }catch(Exception ex){
+            // Se ocorreu algum erro durante a deleção, mostra uma mensagem de erro para o usuário.
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Erro ao excluir uf: " + ex.getMessage(),
+                    "Erro ao excluir",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            // Retorna `false` para indicar que houve um erro.
+            return false;
+        }        
+    }
+
+    @Override
+    public Uf selecionar(Connection connection, String operador, int id) {
+        try{
+            Uf uf = new Uf();
+            PreparedStatement stmt = null;
+            // Cria a instrução SQL para selecionar uma UF.
+            String comando = "SELECT * FROM uf WHERE id " + 
+                             operador + " ? ";
+            // Se o operador for "<", ordena os resultados em ordem decrescente de ID.
+            if(operador.equals("<"))
+                comando += " ORDER BY id DESC";
+            // Prepara a instrução SQL para execução.
+            stmt = connection.prepareStatement(comando);
+            // Define o ID da UF que queremos selecionar.
+            stmt.setInt(1, id);
+            // Executa a seleção no banco de dados.
+            ResultSet rs = stmt.executeQuery();
+            // Se encontrou uma UF, preenche o objeto `Uf` com os dados do banco de dados.
+            if (rs.next()) {
+                uf.setId(rs.getInt("id"));
+                uf.setNome(rs.getString("nome"));
+                uf.setSigla(rs.getString("sigla"));
+            }
+            // Fecha o `PreparedStatement` e o `ResultSet` para liberar recursos.
+            stmt.close();
+            rs.close();
+            // Retorna o objeto `Uf` com os dados selecionados.
+            return uf;
+        } catch (Exception ex) {
+            // Se ocorreu algum erro durante a seleção, mostra uma mensagem de erro para o usuário.
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Erro ao selecionar uf: " + ex.getMessage(),
+                    "Erro ao selecionar",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            // Retorna `null` para indicar que houve um erro.
+            return null;
+        }
+    }
+}
