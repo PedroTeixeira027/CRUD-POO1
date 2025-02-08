@@ -23,12 +23,5 @@ Pedro Teixeira (Aluno) <br>
 <a href="https://www.linkedin.com/in/pedro-teixeira-3534a3268/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a> 
 
 
-## Objetivos
-
-### Documentação Final
-
-
-
-
 ## License
 This project is under [MIT License](./LICENSE).
