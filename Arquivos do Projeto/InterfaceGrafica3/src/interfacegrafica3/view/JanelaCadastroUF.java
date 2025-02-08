@@ -209,7 +209,7 @@ public class JanelaCadastroUF extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void btnRetrocederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetrocederActionPerformed
-        
+
     }//GEN-LAST:event_btnRetrocederActionPerformed
 
     private void btnAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvancarActionPerformed

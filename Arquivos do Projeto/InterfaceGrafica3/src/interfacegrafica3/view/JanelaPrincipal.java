@@ -36,7 +36,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         conexao = new Conexao(
                 "localhost",
                 "root",
-                "Guirp007007!",
+                "sua_senh_do_banco",  //Coloque sua senha do banco
                 3306,
                 "cadastro"
         );
